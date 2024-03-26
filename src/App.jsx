@@ -5,6 +5,7 @@ import { db } from "./data/db";
 
 function App() {
   const [data, setData] = useState(db) // seteamos db
+  const [cart, setCart] = useState([])
 
   return (
     <>
@@ -17,6 +18,8 @@ function App() {
             <Guitar
               key={guitar.id} // pasando el id de la guitarra
               guitar={guitar}
+              cart={cart}
+              setCart={setCart}
             />
           ))}
         </div>
