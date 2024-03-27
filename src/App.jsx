@@ -7,13 +7,16 @@ function App() {
   const [data, setData] = useState(db) // seteamos db
   const [cart, setCart] = useState([])
 
+  const MIN_ITEMS = 1
+  const MAX_ITEMS = 5
+
   // Función para agregar productos al carrito
   function addToCart(item) {
 
     const itemExists = cart.findIndex(guitar => guitar.id === item.id)
 
     if (itemExists >= 0) { // Validación - Existe en el carrito
-
+      if(cart[itemExists].quantity >= MAX_ITEMS) return
       const updatedCart = [...cart] // tomamos una copia del state para no inmutarlo
       updatedCart[itemExists].quantity++ // e incrementamos la cantidad
 
@@ -32,11 +35,43 @@ function App() {
     setCart(prevCart => prevCart.filter(guitar => guitar.id !== id))
   }
 
+  // Función para incrementar productos al carrito
+  function increaseQuantity(id){
+    const updatedCart = cart.map(item => {
+      if (item.id === id && item.quantity < MAX_ITEMS) {
+        return {
+          ...item, // referencia del carrito de compra
+          quantity: item.quantity + 1 // incrementa la cantidad
+        }
+      }
+      return item // para mantener a las guitarras que no se dio click
+    })
+
+    setCart(updatedCart)
+  }
+
+  // Función para decrementar productos al carrito
+  function decreaseQuantity(id){
+    const updatedCart = cart.map(item => {
+      if (item.id === id && item.quantity > MIN_ITEMS) {
+        return {
+          ...item, // referencia del carrito de compra
+          quantity: item.quantity - 1 // decrementa la cantidad
+        }
+      }
+      return item // para mantener a las guitarras que no se dio click
+    })
+
+    setCart(updatedCart)
+  }
+
   return (
     <>
       <Header
         cart={cart}
         removeToCart={removeToCart}
+        increaseQuantity={increaseQuantity}
+        decreaseQuantity={decreaseQuantity}
       />
       <main className="container-xl mt-5">
         <h2 className="text-center">Nuestra Colección</h2>
