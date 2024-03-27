@@ -7,13 +7,31 @@ function App() {
   const [data, setData] = useState(db) // seteamos db
   const [cart, setCart] = useState([])
 
-  function addToCart(item){
-    setCart(prevCart => [...prevCart, item])
+  // Función para agregar productos al carrito
+  function addToCart(item) {
+
+    const itemExists = cart.findIndex(guitar => guitar.id === item.id)
+
+    if (itemExists >= 0) { // Validación - Existe en el carrito
+
+      const updatedCart = [...cart] // tomamos una copia del state para no inmutarlo
+      updatedCart[itemExists].quantity++ // e incrementamos la cantidad
+
+      setCart(updatedCart) // seteamos con updateCart
+
+    } else {
+
+      item.quantity = 1
+      setCart([...cart, item]) // agrega al state
+
+    }
   }
 
   return (
     <>
-      <Header />
+      <Header
+        cart={cart}
+      />
       <main className="container-xl mt-5">
         <h2 className="text-center">Nuestra Colección</h2>
 
@@ -22,7 +40,6 @@ function App() {
             <Guitar
               key={guitar.id} // pasando el id de la guitarra
               guitar={guitar}
-              cart={cart}
               setCart={setCart}
               addToCart={addToCart}
             />
