@@ -1,5 +1,8 @@
 const Header = ({cart}) => {
 
+    // State Derivado
+    const isEmpty = () => cart.length === 0
+
     return (
     <>
         <header className="py-5 header">
@@ -11,14 +14,14 @@ const Header = ({cart}) => {
                     </a>
                 </div>
                 <nav className="col-md-6 a mt-5 d-flex align-items-start justify-content-end">
-                    <div 
+                    <div
                         className="carrito"
                     >
                         <img className="img-fluid" src="./public/img/carrito.png" alt="imagen carrito" />
 
                         <div id="carrito" className="bg-white p-3">
 
-                            {cart.length === 0 ? (
+                            {isEmpty ? (
                                 <p className="text-center">El carrito esta vacio</p>
                             ) : (
                             <table className="w-100 table">
