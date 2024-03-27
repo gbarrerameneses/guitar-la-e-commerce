@@ -1,7 +1,5 @@
 const Header = ({cart}) => {
-    
-    // const { id, name, image, description, price } = cart
-    
+
     return (
     <>
         <header className="py-5 header">
@@ -19,7 +17,10 @@ const Header = ({cart}) => {
                         <img className="img-fluid" src="./public/img/carrito.png" alt="imagen carrito" />
 
                         <div id="carrito" className="bg-white p-3">
-                            <p className="text-center">El carrito esta vacio</p>
+
+                            {cart.length === 0 ? (
+                                <p className="text-center">El carrito esta vacio</p>
+                            ) : (
                             <table className="w-100 table">
                                 <thead>
                                     <tr>
@@ -65,10 +66,9 @@ const Header = ({cart}) => {
                                         </td>
                                     </tr>
                                     ))}
-                                   
                                 </tbody>
                             </table>
-
+                            )}
                             <p className="text-end">Total pagar: <span className="fw-bold">$899</span></p>
                             <button className="btn btn-dark w-100 mt-3 p-2">Vaciar Carrito</button>
                         </div>
