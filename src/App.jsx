@@ -27,10 +27,16 @@ function App() {
     }
   }
 
+  // Función para eliminar productos al carrito
+  function removeToCart(id){
+    setCart(prevCart => prevCart.filter(guitar => guitar.id !== id))
+  }
+
   return (
     <>
       <Header
         cart={cart}
+        removeToCart={removeToCart}
       />
       <main className="container-xl mt-5">
         <h2 className="text-center">Nuestra Colección</h2>
